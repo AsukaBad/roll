@@ -36,8 +36,13 @@
   </style>
   <!-- Discord プレビュー用メタタグ -->
   <meta property="og:title" content="ランダムな数値">
+  <meta property="og:description" content="1から100までのランダムな数値を生成しました">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="">
   <meta property="og:image" content="https://example.com/your-image.jpg">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 </head>
 <body>
   <div id="random-number">ここにランダムな数値が表示されます</div>
@@ -53,9 +58,12 @@
       const metaTitle = document.querySelector('meta[property="og:title"]');
       const metaDescription = document.querySelector('meta[property="og:description"]');
       const metaUrl = document.querySelector('meta[property="og:url"]');
+      const metaImage = document.querySelector('meta[property="og:image"]');
 
       metaTitle.setAttribute('content', `生成されたランダムな数値: ${number}`);
+      metaDescription.setAttribute('content', `1から100までのランダムな数値を生成しました: ${number}`);
       metaUrl.setAttribute('content', window.location.href);
+      metaImage.setAttribute('content', `https://example.com/image/${number}.png`);
     }
 
     document.getElementById("generate-button").addEventListener("click", function() {
@@ -79,7 +87,7 @@
         document.getElementById("random-number").textContent = lastRandomNumber;
       }
 
-      // URLにパラメーターがある場合、その値を表示
+      // URLにパラメータがある場合、その値を表示
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('number')) {
         const numberFromUrl = urlParams.get('number');
@@ -87,6 +95,5 @@
         updateMetaTags(numberFromUrl);
       }
     });
-  </script>
 </body>
 </html>
