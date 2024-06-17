@@ -1,14 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ランダムな数値を表示</title>
+    <title>ランダムな数値を生成</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -17,20 +17,36 @@
         #random-number {
             font-size: 2em;
             color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div id="random-number"></div>
+    <div id="random-number">ここにランダムな数値が表示されます</div>
+    <button id="generate-button">数値を生成</button>
 
     <script>
         function getRandomNumber(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("generate-button").addEventListener("click", function() {
             const randomNumber = getRandomNumber(1, 100);
             document.getElementById("random-number").textContent = randomNumber;
+            localStorage.setItem("lastRandomNumber", randomNumber);
+        });
+
+        // ページがロードされたときに前回保存した値を表示
+        document.addEventListener("DOMContentLoaded", function() {
+            const lastRandomNumber = localStorage.getItem("lastRandomNumber");
+            if (lastRandomNumber !== null) {
+                document.getElementById("random-number").textContent = lastRandomNumber;
+            }
         });
     </script>
 </body>
