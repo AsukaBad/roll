@@ -1,96 +1,92 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ランダムな数値を生成</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        #random-number {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-        #share-link {
-            margin-top: 10px;
-            font-size: 1em;
-            color: blue;
-            text-decoration: underline;
-            cursor: pointer;
-            display: none;
-        }
-    </style>
-    <!-- Discord プレビュー用メタタグ -->
-    <meta property="og:title" content="ランダムな数値">
-    <meta property="og:description" content="1から100までのランダムな数値を生成しました">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="https://example.com/your-image.jpg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ランダムな数値を生成</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    #random-number {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    #share-link {
+      margin-top: 10px;
+      font-size: 1em;
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+  <!-- Discord プレビュー用メタタグ -->
+  <meta property="og:title" content="ランダムな数値">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://example.com/your-image.jpg">
 </head>
 <body>
-    <div id="random-number">ここにランダムな数値が表示されます</div>
-    <button id="generate-button">数値を生成</button>
-    <a id="share-link" target="_blank">共有リンク</a>
+  <div id="random-number">ここにランダムな数値が表示されます</div>
+  <button id="generate-button">数値を生成</button>
+  <a id="share-link" target="_blank">共有リンク</a>
 
-    <script>
-        function getRandomNumber(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+  <script>
+    function getRandomNumber(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
-        function updateMetaTags(number) {
-            const metaTitle = document.querySelector('meta[property="og:title"]');
-            const metaDescription = document.querySelector('meta[property="og:description"]');
-            const metaUrl = document.querySelector('meta[property="og:url"]');
+    function updateMetaTags(number) {
+      const metaTitle = document.querySelector('meta[property="og:title"]');
+      const metaDescription = document.querySelector('meta[property="og:description"]');
+      const metaUrl = document.querySelector('meta[property="og:url"]');
 
-            metaTitle.setAttribute('content', `生成されたランダムな数値: ${number}`);
-            metaDescription.setAttribute('content', `1から100までのランダムな数値を生成しました: ${number}`);
-            metaUrl.setAttribute('content', window.location.href);
-        }
+      metaTitle.setAttribute('content', `生成されたランダムな数値: ${number}`);
+      metaUrl.setAttribute('content', window.location.href);
+    }
 
-        document.getElementById("generate-button").addEventListener("click", function() {
-            const randomNumber = getRandomNumber(1, 100);
-            document.getElementById("random-number").textContent = randomNumber;
-            localStorage.setItem("lastRandomNumber", randomNumber);
+    document.getElementById("generate-button").addEventListener("click", function() {
+      const randomNumber = getRandomNumber(1, 100);
+      document.getElementById("random-number").textContent = randomNumber;
+      localStorage.setItem("lastRandomNumber", randomNumber);
 
-            const url = `${window.location.origin}${window.location.pathname}?number=${randomNumber}`;
-            const shareLink = document.getElementById("share-link");
-            shareLink.href = url;
-            shareLink.textContent = url;
-            shareLink.style.display = 'block';
+      const url = `${window.location.origin}${window.location.pathname}?number=${randomNumber}`;
+      const shareLink = document.getElementById("share-link");
+      shareLink.href = url;
+      shareLink.textContent = url;
+      shareLink.style.display = 'block';
 
-            updateMetaTags(randomNumber);
-        });
+      updateMetaTags(randomNumber);
+    });
 
-        // ページがロードされたときに前回保存した値を表示
-        document.addEventListener("DOMContentLoaded", function() {
-            const lastRandomNumber = localStorage.getItem("lastRandomNumber");
-            if (lastRandomNumber !== null) {
-                document.getElementById("random-number").textContent = lastRandomNumber;
-            }
+    // ページがロードされたときに前回保存した値を表示
+    document.addEventListener("DOMContentLoaded", function() {
+      const lastRandomNumber = localStorage.getItem("lastRandomNumber");
+      if (lastRandomNumber !== null) {
+        document.getElementById("random-number").textContent = lastRandomNumber;
+      }
 
-            // URLにパラメータがある場合、その値を表示
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('number')) {
-                const numberFromUrl = urlParams.get('number');
-                document.getElementById("random-number").textContent = numberFromUrl;
-                updateMetaTags(numberFromUrl);
-            }
-        });
-    </script>
+      // URLにパラメーターがある場合、その値を表示
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('number')) {
+        const numberFromUrl = urlParams.get('number');
+        document.getElementById("random-number").textContent = numberFromUrl;
+        updateMetaTags(numberFromUrl);
+      }
+    });
+  </script>
 </body>
 </html>
-
