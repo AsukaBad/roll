@@ -60,7 +60,7 @@
             document.getElementById("random-number").textContent = randomNumber;
             localStorage.setItem("lastRandomNumber", randomNumber);
 
-            const url = `${window.location.origin}${window.location.pathname}?number=${randomNumber}`;
+            const url = `https://asukabad.github.io/roll/${randomNumber}.html`;
             const shareLink = document.getElementById("share-link");
             shareLink.href = url;
             shareLink.textContent = url;
@@ -85,12 +85,5 @@
             }
         });
     </script>
-
-    <!-- Discord プレビュー用メタタグ -->
-    <meta property="og:title" content="ランダムな数値">
-    <meta property="og:description" content="1から100までのランダムな数値を生成しました">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="https://example.com/your-image.jpg">
 </body>
 </html>
