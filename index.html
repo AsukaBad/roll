@@ -45,14 +45,14 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        function updateMetaTag(randomNumber) {
-            let metaTag = document.querySelector('meta[property="og:description"]');
-            if (!metaTag) {
-                metaTag = document.createElement('meta');
-                metaTag.setAttribute('property', 'og:description');
-                document.head.appendChild(metaTag);
-            }
-            metaTag.setAttribute('content', `生成されたランダムな数値は ${randomNumber} です`);
+        function updateMetaTags(number) {
+            const metaTitle = document.querySelector('meta[property="og:title"]');
+            const metaDescription = document.querySelector('meta[property="og:description"]');
+            const metaUrl = document.querySelector('meta[property="og:url"]');
+
+            metaTitle.setAttribute('content', `生成されたランダムな数値: ${number}`);
+            metaDescription.setAttribute('content', `1から100までのランダムな数値を生成しました: ${number}`);
+            metaUrl.setAttribute('content', window.location.href);
         }
 
         document.getElementById("generate-button").addEventListener("click", function() {
@@ -66,7 +66,7 @@
             shareLink.textContent = url;
             shareLink.style.display = 'block';
 
-            updateMetaTag(randomNumber);
+            updateMetaTags(randomNumber);
         });
 
         // ページがロードされたときに前回保存した値を表示
@@ -74,7 +74,6 @@
             const lastRandomNumber = localStorage.getItem("lastRandomNumber");
             if (lastRandomNumber !== null) {
                 document.getElementById("random-number").textContent = lastRandomNumber;
-                updateMetaTag(lastRandomNumber);
             }
 
             // URLにパラメータがある場合、その値を表示
@@ -82,16 +81,17 @@
             if (urlParams.has('number')) {
                 const numberFromUrl = urlParams.get('number');
                 document.getElementById("random-number").textContent = numberFromUrl;
-                updateMetaTag(numberFromUrl);
+                updateMetaTags(numberFromUrl);
             }
         });
     </script>
 
     <!-- Discord プレビュー用メタタグ -->
     <meta property="og:title" content="ランダムな数値">
-    <meta property="og:description" content="">
+    <meta property="og:description" content="1から100までのランダムな数値を生成しました">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta property="og:image" content="https://example.com/your-image.jpg">
 </body>
 </html>
+
